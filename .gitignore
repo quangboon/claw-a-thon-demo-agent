@@ -1,0 +1,16 @@
+.greennode.json
+.agentbase/
+.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Runtime state (transient; corrections sync to AgentBase Memory in prod)
+backend/review_queue.jsonl
+backend/corrections.jsonl
+backend/data/_test_*
+
+plans/
+.claude/

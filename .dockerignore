@@ -1,0 +1,18 @@
+# Secrets — never bake into the image (injected via AgentBase credential at runtime)
+.env
+.greennode.json
+.agentbase/
+
+# Dev / VCS / docs
+.git/
+.venv/
+**/__pycache__/
+*.pyc
+plans/
+docs/
+web/node_modules/
+
+# Transient runtime state
+backend/review_queue.jsonl
+backend/corrections.jsonl
+backend/data/_test_*

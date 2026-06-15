@@ -1,0 +1,353 @@
+[
+  {
+    "source": "灵石",
+    "vi": "Linh Thạch",
+    "category": "currency",
+    "note": "Đơn vị tiền tệ chính trong game",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "传送阵",
+    "vi": "Truyền Tống Trận",
+    "category": "mechanic",
+    "note": "Cơ chế di chuyển nhanh giữa các địa điểm",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "仙缘礼包",
+    "vi": "Gói Quà Tiên Duyên",
+    "category": "item",
+    "note": "Gói quà sự kiện đặc biệt",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "修为",
+    "vi": "Tu Vi",
+    "category": "mechanic",
+    "note": "Chỉ số kinh nghiệm tu luyện",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "丹药",
+    "vi": "Đan Dược",
+    "category": "item",
+    "note": "Vật phẩm tăng chỉ số hoặc hồi phục",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "宗门",
+    "vi": "Tông Môn",
+    "category": "place",
+    "note": "Tổ chức tu luyện của nhân vật",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "宗门秘籍",
+    "vi": "Tông Môn Bí Kíp",
+    "category": "item",
+    "note": "Sách học kỹ năng đặc thù của tông môn",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "法宝",
+    "vi": "Pháp Bảo",
+    "category": "item",
+    "note": "Vũ khí hoặc vật phẩm có phép thuật",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "神通",
+    "vi": "Thần Thông",
+    "category": "skill",
+    "note": "Kỹ năng đặc biệt cấp cao",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "灵脉",
+    "vi": "Linh Mạch",
+    "category": "place",
+    "note": "Khu vực chứa nguồn năng lượng tu luyện",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "元婴期",
+    "vi": "Nguyên Anh Kỳ",
+    "category": "realm",
+    "note": "Cảnh giới tu luyện trung cấp",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "渡劫",
+    "vi": "Độ Kiếp",
+    "category": "mechanic",
+    "note": "Cơ chế thử thách để thăng cấp cảnh giới",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "副本",
+    "vi": "Phụ Bản",
+    "category": "place",
+    "note": "Khu vực nhiệm vụ đặc biệt (Dungeon)",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "化神期",
+    "vi": "Hóa Thần Kỳ",
+    "category": "realm",
+    "note": "Cảnh giới tu luyện cao cấp hơn Nguyên Anh",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "炼丹炉",
+    "vi": "Luyện Đan Lư",
+    "category": "item",
+    "note": "Công cụ để chế tạo đan dược",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "聚气丹",
+    "vi": "Tụ Khí Đan",
+    "category": "item",
+    "note": "Loại đan dược tăng Tu Vi",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "御剑飞行",
+    "vi": "Ngự Kiếm Phi Hành",
+    "category": "skill",
+    "note": "Kỹ năng di chuyển bằng kiếm",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "灵力",
+    "vi": "Linh Lực",
+    "category": "mechanic",
+    "note": "Năng lượng sử dụng cho kỹ năng",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "仙盟",
+    "vi": "Tiên Minh",
+    "category": "place",
+    "note": "Liên minh các tông môn",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "天梯赛",
+    "vi": "Thiên Thê Tái",
+    "category": "mechanic",
+    "note": "Chế độ xếp hạng đấu trường",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "灵宠",
+    "vi": "Linh Thú",
+    "category": "item",
+    "note": "Thú cưng có phép thuật",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "洞府",
+    "vi": "Động Phủ",
+    "category": "place",
+    "note": "Nhà riêng của nhân vật để tu luyện",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "聚灵阵",
+    "vi": "Tụ Linh Trận",
+    "category": "item",
+    "note": "Trận pháp tăng tốc độ tu luyện",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "储物戒指",
+    "vi": "Nhẫn Trữ Vật",
+    "category": "item",
+    "note": "Vật phẩm chứa đồ",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "护身符箓",
+    "vi": "Hộ Thân Phù Lục",
+    "category": "item",
+    "note": "Vật phẩm phòng thủ hoặc hồi phục",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "还魂丹",
+    "vi": "Hoàn Hồn Đan",
+    "category": "item",
+    "note": "Đan dược hồi sinh khi chết",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "世界boss",
+    "vi": "Thế Giới Boss",
+    "category": "mechanic",
+    "note": "Quái vật đầu lĩnh toàn server",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "万年妖兽",
+    "vi": "Vạn Niên Yêu Thú",
+    "category": "item",
+    "note": "Tên gọi của quái vật đầu lĩnh",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "功法残页",
+    "vi": "Công Pháp Tàn Diệp",
+    "category": "item",
+    "note": "Vật phẩm học kỹ năng",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "传送符",
+    "vi": "Truyền Tống Phù",
+    "category": "item",
+    "note": "Vật phẩm dùng để di chuyển nhanh",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "演武场",
+    "vi": "Diễn Võ Trường",
+    "category": "place",
+    "note": "Địa điểm đấu tay đôi",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "强化石",
+    "vi": "Cường Hóa Thạch",
+    "category": "item",
+    "note": "Vật phẩm dùng để nâng cấp trang bị",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "灵霄仙界",
+    "vi": "Linh Tiêu Tiên Giới",
+    "category": "place",
+    "note": "Tên của máy chủ mới",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "仙玉",
+    "vi": "Tiên Ngọc",
+    "category": "currency",
+    "note": "Tiền tệ trả phí (Premium Currency)",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "拍卖行",
+    "vi": "Nhà Đấu Giá",
+    "category": "place",
+    "note": "Nơi giao dịch vật phẩm giữa người chơi",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "师门贡献",
+    "vi": "Sư Môn Đóng Góp",
+    "category": "currency",
+    "note": "Tiền tệ nội bộ của tông môn",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "丹方",
+    "vi": "Đan Phương",
+    "category": "item",
+    "note": "Công thức chế tạo đan dược",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "灵草",
+    "vi": "Linh Thảo",
+    "category": "item",
+    "note": "Vật phẩm nuôi dưỡng thú cưỡi",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  },
+  {
+    "source": "要塞",
+    "vi": "Pháo Đài",
+    "category": "place",
+    "note": "Địa điểm chiến tranh giữa các bang hội",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active"
+  }
+]

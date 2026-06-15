@@ -1,0 +1,10 @@
+{"source": "灵石 +20%，开放传送阵", "must_contain": ["Linh Thạch", "Truyền Tống Trận"], "expect": "auto_approved"}
+{"source": "完成每日任务可领取仙缘礼包", "must_contain": ["Gói Quà Tiên Duyên"], "expect": "auto_approved"}
+{"source": "突破境界获得额外修为", "must_contain": ["Tu Vi"], "expect": "auto_approved"}
+{"source": "加入宗门后可学习宗门秘籍", "must_contain": ["Tông Môn"], "expect": "auto_approved"}
+{"source": "元婴期修士可挑战渡劫副本", "must_contain": ["Nguyên Anh Kỳ", "Độ Kiếp", "Phụ Bản"], "expect": "auto_approved"}
+{"source": "炼制丹药需要炼丹炉", "must_contain": ["Đan Dược", "Luyện Đan Lư"], "expect": "auto_approved"}
+{"source": "御剑飞行消耗灵力", "must_contain": ["Ngự Kiếm Phi Hành", "Linh Lực"], "expect": "auto_approved"}
+{"source": "拍卖行竞拍需消耗仙玉", "must_contain": ["Nhà Đấu Giá", "Tiên Ngọc"], "expect": "auto_approved"}
+{"source": "强化装备需要强化石", "must_contain": ["Cường Hóa Thạch"], "expect": "auto_approved"}
+{"source": "坐骑培养提升移动速度", "must_contain": [], "expect": "auto_approved"}
