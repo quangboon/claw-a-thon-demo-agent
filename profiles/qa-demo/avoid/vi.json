@@ -1,8 +1,22 @@
 [
-  { "term": "cờ bạc",        "category": "compliance", "severity": "error",   "is_pattern": false },
-  { "term": "đánh bạc",      "category": "compliance", "severity": "error",   "is_pattern": false },
-  { "term": "nổ hũ",         "category": "compliance", "severity": "error",   "is_pattern": false },
-  { "term": "cá độ",         "category": "compliance", "severity": "error",   "is_pattern": false },
-  { "term": "đỉnh của chóp", "category": "tone",       "severity": "warning", "is_pattern": false },
-  { "term": "xàm",          "category": "tone",       "severity": "warning", "is_pattern": false }
+  { "term": "đường lưỡi bò",   "category": "sovereignty", "severity": "error",   "is_pattern": false },
+  { "term": "đường chín đoạn", "category": "sovereignty", "severity": "error",   "is_pattern": false },
+  { "term": "hình lưỡi bò",    "category": "sovereignty", "severity": "error",   "is_pattern": false },
+  { "term": "bản đồ lưỡi bò",  "category": "sovereignty", "severity": "error",   "is_pattern": false },
+  { "term": "biển Hoa Nam",    "category": "sovereignty", "severity": "error",   "is_pattern": false },
+  { "term": "Nam Sa",          "category": "sovereignty", "severity": "error",   "is_pattern": false },
+  { "term": "Tây Sa",          "category": "sovereignty", "severity": "error",   "is_pattern": false },
+  { "term": "Tam Sa",          "category": "sovereignty", "severity": "error",   "is_pattern": false },
+  { "term": "Trung Sa",        "category": "sovereignty", "severity": "warning", "is_pattern": false },
+  { "term": "Nam Hải",         "category": "sovereignty", "severity": "warning", "is_pattern": false },
+  { "term": "Hoàng Nham",      "category": "sovereignty", "severity": "warning", "is_pattern": false },
+  { "term": "tỉnh Đài Loan",   "category": "political",   "severity": "warning", "is_pattern": false },
+
+  { "term": "cờ bạc",          "category": "compliance",  "severity": "error",   "is_pattern": false },
+  { "term": "đánh bạc",        "category": "compliance",  "severity": "error",   "is_pattern": false },
+  { "term": "nổ hũ",           "category": "compliance",  "severity": "error",   "is_pattern": false },
+  { "term": "cá độ",           "category": "compliance",  "severity": "error",   "is_pattern": false },
+
+  { "term": "đỉnh của chóp",   "category": "tone",        "severity": "warning", "is_pattern": false },
+  { "term": "xàm",            "category": "tone",        "severity": "warning", "is_pattern": false }
 ]

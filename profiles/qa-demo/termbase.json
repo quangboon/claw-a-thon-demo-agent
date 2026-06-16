@@ -2,5 +2,8 @@
   { "source": "充值", "vi": "Nạp",        "category": "mechanic", "note": "Nạp tiền", "trust_score": 1.0, "last_used": null, "status": "active", "targets": { "th": "เติมเงิน" } },
   { "source": "金币", "vi": "Vàng",       "category": "currency", "note": "Tiền cơ bản", "trust_score": 1.0, "last_used": null, "status": "active", "targets": { "th": "เหรียญทอง" } },
   { "source": "活动", "vi": "Sự Kiện",    "category": "mechanic", "note": "Sự kiện", "trust_score": 1.0, "last_used": null, "status": "active", "targets": { "th": "กิจกรรม" } },
-  { "source": "宝箱", "vi": "Rương Báu",  "category": "item",     "note": "Rương phần thưởng", "trust_score": 1.0, "last_used": null, "status": "active", "targets": { "th": "หีบสมบัติ" } }
+  { "source": "宝箱", "vi": "Rương Báu",  "category": "item",     "note": "Rương phần thưởng", "trust_score": 1.0, "last_used": null, "status": "active", "targets": { "th": "หีบสมบัติ" } },
+  { "source": "南沙群岛", "vi": "quần đảo Trường Sa", "category": "place", "note": "BẮT BUỘC tên VN — KHÔNG dùng 'Nam Sa'", "trust_score": 1.0, "last_used": null, "status": "active", "targets": {} },
+  { "source": "西沙群岛", "vi": "quần đảo Hoàng Sa",  "category": "place", "note": "BẮT BUỘC tên VN — KHÔNG dùng 'Tây Sa'", "trust_score": 1.0, "last_used": null, "status": "active", "targets": {} },
+  { "source": "南海",     "vi": "Biển Đông",          "category": "place", "note": "Vùng biển — dùng 'Biển Đông', KHÔNG 'biển Hoa Nam'", "trust_score": 1.0, "last_used": null, "status": "active", "targets": {} }
 ]
