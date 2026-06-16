@@ -47,6 +47,7 @@ def build_translation_service(
     profile_id = profile_id or settings.default_profile_id
     paths = profile_paths(profile_id)
     profiles = build_profile_repository()
+    prof = profiles.get(profile_id)
 
     llm = get_llm_provider(llm_backend or settings.llm_backend)
     termbase = FileTermbaseRepository(termbase_path or str(paths.termbase))
@@ -61,6 +62,10 @@ def build_translation_service(
         avoid=profiles.avoid(profile_id, target_lang),
         examples=profiles.examples(profile_id, target_lang),
         target_lang=target_lang,
+        format_config={
+            "enabled": prof.format_enabled if prof else True,
+            "extra": prof.format_extra_tokens if prof else [],
+        },
     )
 
 

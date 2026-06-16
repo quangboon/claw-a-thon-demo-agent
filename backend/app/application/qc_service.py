@@ -25,8 +25,9 @@ class QCService:
         self._fluency_threshold = fluency_threshold
 
     def review(self, source: str, draft: str, matched_terms: list,
-               avoid_list: list | None = None, target_lang: str = "vi") -> QcVerdict:
-        context = {"avoid": avoid_list or [], "target_lang": target_lang}
+               avoid_list: list | None = None, target_lang: str = "vi",
+               format_config: dict | None = None) -> QcVerdict:
+        context = {"avoid": avoid_list or [], "target_lang": target_lang, "format": format_config or {}}
         issues: list[QcIssue] = []
         for rule in all_qc_rules():
             issues.extend(rule.check(source, draft, matched_terms, context))

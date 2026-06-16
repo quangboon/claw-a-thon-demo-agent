@@ -65,6 +65,7 @@ def _llm():
 def translation_service_for(profile_id: str, target_lang: str) -> TranslationService:
     llm = _llm()
     profiles = get_profiles()
+    prof = profiles.get(profile_id)
     return TranslationService(
         termbase_for(profile_id), Translator(llm), QCService(QCReviewer(llm)),
         corrections=corrections_for(profile_id), review_channel=queue_for(profile_id),
@@ -72,6 +73,10 @@ def translation_service_for(profile_id: str, target_lang: str) -> TranslationSer
         avoid=profiles.avoid(profile_id, target_lang),
         examples=profiles.examples(profile_id, target_lang),
         target_lang=target_lang,
+        format_config={
+            "enabled": prof.format_enabled if prof else True,
+            "extra": prof.format_extra_tokens if prof else [],
+        },
     )
 
 

@@ -52,7 +52,15 @@ def _fmt(counter: Counter) -> str:
 @register_qc_rule("format-preservation")
 class FormatPreservationRule:
     def check(self, source: str, draft: str, matched_terms: list, context: dict | None = None) -> list[QcIssue]:
+        fmt = (context or {}).get("format") or {}
+        if fmt.get("enabled") is False:  # per-profile opt-out
+            return []
         src, dst = _tokens(source), _tokens(draft)
+        # Extra profile-specific literal tokens (verbatim parity), e.g. engine codes.
+        for tok in fmt.get("extra") or []:
+            if tok:
+                src[tok] += (source or "").count(tok)
+                dst[tok] += (draft or "").count(tok)
         issues: list[QcIssue] = []
         missing = src - dst  # in source, missing or fewer in draft
         extra = dst - src    # added/duplicated in draft

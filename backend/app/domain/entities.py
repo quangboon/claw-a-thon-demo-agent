@@ -38,6 +38,8 @@ class Profile:
     source_lang: str = "zh"
     target_langs: list = field(default_factory=lambda: ["vi"])
     char_name_convention: str = ""  # optional note on character-name / POV handling
+    format_enabled: bool = True     # run the format-preservation QC rule for this profile
+    format_extra_tokens: list = field(default_factory=list)  # extra literal tokens to preserve verbatim
 
 
 @dataclass

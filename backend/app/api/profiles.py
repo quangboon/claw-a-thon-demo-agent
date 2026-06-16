@@ -58,6 +58,11 @@ class AvoidIn(BaseModel):
     entries: list[AvoidEntryIn] = []
 
 
+class FormatIn(BaseModel):
+    enabled: bool = True
+    extra_tokens: list[str] = []
+
+
 def _detail(repo: FileProfileRepository, prof: Profile) -> dict:
     data = asdict(prof)
     data["tone_langs"] = [l for l in prof.target_langs if repo.tone(prof.id, l)]
@@ -82,9 +87,29 @@ def get_profile(profile_id: str, repo: FileProfileRepository = Depends(get_profi
 @router.post("/profiles")
 def upsert_profile(body: ProfileIn, repo: FileProfileRepository = Depends(get_profiles)) -> dict:
     _require_valid(body.id.strip())
-    repo.upsert(Profile(**body.model_dump()))
+    prof = Profile(**body.model_dump())
+    existing = repo.get(body.id)
+    if existing:  # preserve format config across name/target-lang edits (set it via /format)
+        prof.format_enabled = existing.format_enabled
+        prof.format_extra_tokens = existing.format_extra_tokens
+    repo.upsert(prof)
     _invalidate_services()
     return {"ok": True, "id": body.id}
+
+
+@router.put("/profiles/{profile_id}/format")
+def set_format(profile_id: str, body: FormatIn,
+               repo: FileProfileRepository = Depends(get_profiles)) -> dict:
+    _require_valid(profile_id)
+    prof = repo.get(profile_id)
+    if not prof:
+        raise HTTPException(status_code=404, detail="profile not found")
+    prof.format_enabled = body.enabled
+    prof.format_extra_tokens = [t for t in body.extra_tokens if t.strip()]
+    repo.upsert(prof)
+    _invalidate_services()
+    return {"ok": True, "id": profile_id, "enabled": prof.format_enabled,
+            "extra_count": len(prof.format_extra_tokens)}
 
 
 @router.get("/profiles/{profile_id}/tone/{lang}")
