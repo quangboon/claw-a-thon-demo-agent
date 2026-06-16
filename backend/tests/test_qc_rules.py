@@ -72,6 +72,19 @@ def test_format_rpgmaker_control_code():
     assert any(i.axis == "format" and i.severity == "error" for i in iss)
 
 
+def test_format_disabled_per_profile():
+    rule = FormatPreservationRule()
+    # placeholder dropped but format disabled → no issue
+    assert rule.check("获得 {0} 金币", "Nhận Vàng", [], {"format": {"enabled": False}}) == []
+
+
+def test_format_extra_literal_token():
+    rule = FormatPreservationRule()
+    # custom engine token "||" required via profile config
+    iss = rule.check("名字||等级", "Tên cấp", [], {"format": {"enabled": True, "extra": ["||"]}})
+    assert any(i.axis == "format" and i.severity == "error" for i in iss)
+
+
 def test_term_compliance_uses_target_lang():
     rule = TermComplianceRule()
     term = Term(source="金币", vi="Vàng", targets={"th": "เหรียญทอง"})

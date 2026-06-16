@@ -47,6 +47,8 @@ class FileProfileRepository:
             source_lang=data.get("source_lang", "zh"),
             target_langs=data.get("target_langs", ["vi"]),
             char_name_convention=data.get("char_name_convention", ""),
+            format_enabled=data.get("format_enabled", True),
+            format_extra_tokens=data.get("format_extra_tokens", []),
         )
         self._cache[profile_id] = prof
         return prof

@@ -51,6 +51,8 @@ export interface Profile {
   source_lang: string;
   target_langs: string[];
   char_name_convention?: string;
+  format_enabled?: boolean;
+  format_extra_tokens?: string[];
   tone_langs?: string[];
   avoid_counts?: Record<string, number>;
 }
@@ -158,5 +160,9 @@ export const api = {
   setAvoid: (id: string, lang: string, entries: AvoidEntry[]) =>
     req<{ ok: boolean }>(`/profiles/${encodeURIComponent(id)}/avoid/${lang}`, {
       method: "PUT", body: JSON.stringify({ entries }),
+    }),
+  setFormat: (id: string, enabled: boolean, extra_tokens: string[]) =>
+    req<{ ok: boolean }>(`/profiles/${encodeURIComponent(id)}/format`, {
+      method: "PUT", body: JSON.stringify({ enabled, extra_tokens }),
     }),
 };

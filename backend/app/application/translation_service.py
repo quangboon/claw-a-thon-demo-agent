@@ -36,7 +36,8 @@ class TranslationService:
                  corrections: CorrectionStore | None = None,
                  review_channel: ReviewChannel | None = None, max_retries: int = 1,
                  tone: str = "", avoid: list[AvoidEntry] | None = None,
-                 examples: list[Example] | None = None, target_lang: str = "vi"):
+                 examples: list[Example] | None = None, target_lang: str = "vi",
+                 format_config: dict | None = None):
         self._termbase = termbase
         self._translator = translator
         self._qc = qc
@@ -47,6 +48,7 @@ class TranslationService:
         self._avoid = avoid or []
         self._examples = examples or []
         self._target_lang = target_lang
+        self._format_config = format_config or {}
 
     def run(self, source: str) -> dict:
         lang = self._target_lang
@@ -66,7 +68,8 @@ class TranslationService:
                 source, glossary, corr_prompt, feedback,
                 tone=self._tone, avoid=avoid_prompt, examples=self._examples, target_lang=lang,
             )
-            verdict = self._qc.review(source, draft, matched, avoid_list=self._avoid, target_lang=lang)
+            verdict = self._qc.review(source, draft, matched, avoid_list=self._avoid,
+                                      target_lang=lang, format_config=self._format_config)
             # Only retry on `fail` (fixable term/completeness/banned issues). `needs_review`
             # is subjective fluency — a retry rarely helps, so short-circuit to human.
             if verdict.status != "fail":

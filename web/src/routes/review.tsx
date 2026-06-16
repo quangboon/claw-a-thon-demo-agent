@@ -5,6 +5,7 @@ import { api, type ReviewItem } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { QcIssues } from "@/components/qc-issues";
 
 export function Review() {
   const qc = useQueryClient();
@@ -49,11 +50,7 @@ function ReviewCard({ item, onApprove, onReject, busy }: {
       <CardHeader><CardTitle className="font-mono text-sm">{item.source}</CardTitle></CardHeader>
       <CardContent className="space-y-3">
         <div className="text-sm"><span className="text-muted text-xs">Bản dịch ứng viên:</span><br />{item.translation}</div>
-        {item.qc?.issues?.length ? (
-          <ul className="text-xs text-danger list-disc pl-4">
-            {item.qc.issues.map((i, idx) => <li key={idx}>[{i.axis}] {i.message}</li>)}
-          </ul>
-        ) : null}
+        {item.qc?.issues?.length ? <QcIssues issues={item.qc.issues} /> : null}
         {editing ? (
           <div className="space-y-2">
             <Textarea value={text} onChange={(e) => setText(e.target.value)} rows={3} />

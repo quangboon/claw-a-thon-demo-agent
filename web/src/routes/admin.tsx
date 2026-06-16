@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Plus, Save } from "lucide-react";
-import { api, type AvoidEntry } from "@/lib/api";
+import { api, type AvoidEntry, type Profile } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -76,8 +76,47 @@ function ProfileEditor({ profileId }: { profileId: string }) {
       <CardContent className="grid gap-4 md:grid-cols-2">
         <ToneEditor profileId={profileId} lang={lang} />
         <AvoidEditor profileId={profileId} lang={lang} />
+        <div className="md:col-span-2">
+          <FormatEditor profileId={profileId} profile={profile} />
+        </div>
       </CardContent>
     </Card>
+  );
+}
+
+const BASE_FORMAT_TOKENS = "{0} {name}  ·  <b> <color>  ·  [player]  ·  %s %d  ·  \\c[3]  ·  【】《》「」『』";
+
+function FormatEditor({ profileId, profile }: { profileId: string; profile?: Profile }) {
+  const qc = useQueryClient();
+  const [enabled, setEnabled] = useState(true);
+  const [extra, setExtra] = useState("");
+  useEffect(() => {
+    if (profile) {
+      setEnabled(profile.format_enabled ?? true);
+      setExtra((profile.format_extra_tokens ?? []).join(", "));
+    }
+  }, [profile]);
+  const save = useMutation({
+    mutationFn: () => api.setFormat(profileId, enabled, extra.split(",").map((s) => s.trim()).filter(Boolean)),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["profile", profileId] }),
+  });
+  return (
+    <div className="space-y-2 border-t border-line pt-3">
+      <div className="flex items-center justify-between">
+        <p className="text-sm font-medium">Định dạng (placeholder / tag)</p>
+        <label className="flex items-center gap-2 text-sm">
+          <input type="checkbox" checked={enabled} onChange={(e) => setEnabled(e.target.checked)} />
+          Bật kiểm format
+        </label>
+      </div>
+      <p className="text-xs text-muted">Token cơ bản (luôn bắt): <span className="font-mono">{BASE_FORMAT_TOKENS}</span></p>
+      <Input value={extra} onChange={(e) => setExtra(e.target.value)}
+             placeholder="Token engine riêng, cách nhau dấu phẩy (vd: ||, $$, [[icon]])" />
+      <Button size="sm" onClick={() => save.mutate()} disabled={save.isPending}>
+        <Save size={14} /> Lưu format
+      </Button>
+      {save.isSuccess && <Badge tone="success">Đã lưu</Badge>}
+    </div>
   );
 }
 

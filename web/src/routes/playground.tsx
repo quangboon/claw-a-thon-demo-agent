@@ -10,6 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { Select } from "@/components/ui/select";
 import { ProfileSelect } from "@/components/layout/profile-select";
 import { QcVerdict } from "@/components/qc-verdict";
+import { QcIssues } from "@/components/qc-issues";
+import { diffTokens, hasFormatTokens } from "@/lib/format-tokens";
 
 const LANG_LABEL: Record<string, string> = { vi: "Tiếng Việt", th: "ภาษาไทย", en: "English" };
 
@@ -103,11 +105,10 @@ export function Playground() {
                   </div>
                 </div>
               )}
-              {r.qc.issues.length > 0 && (
-                <ul className="text-xs text-danger list-disc pl-4">
-                  {r.qc.issues.map((i, idx) => <li key={idx}>[{i.axis}] {i.message}</li>)}
-                </ul>
+              {(profile.data?.format_enabled ?? true) && hasFormatTokens(r.source, profile.data?.format_extra_tokens) && (
+                <FormatTokens source={r.source} draft={r.translation} extra={profile.data?.format_extra_tokens} />
               )}
+              <QcIssues issues={r.qc.issues} />
               {r.decision === "send_to_human" && (
                 <p className="flex items-center gap-1 text-xs text-warning"><Send size={12} /> Đã đẩy vào hàng đợi duyệt.</p>
               )}
@@ -115,6 +116,25 @@ export function Playground() {
           )}
         </CardContent>
       </Card>
+    </div>
+  );
+}
+
+/** Format-token chips: green = giữ nguyên, đỏ = thiếu, vàng = thừa (placeholder/tag). */
+function FormatTokens({ source, draft, extra }: { source: string; draft: string; extra?: string[] }) {
+  const diffs = diffTokens(source, draft, extra ?? []);
+  const TONE = { ok: "bg-success/10 text-success border-success/30", missing: "bg-danger/10 text-danger border-danger/30", extra: "bg-warning/10 text-warning border-warning/30" };
+  const LABEL = { ok: "✓", missing: "thiếu", extra: "thừa" };
+  return (
+    <div className="border-t border-line pt-3">
+      <p className="text-xs text-muted mb-1">Định dạng (placeholder / tag)</p>
+      <div className="flex flex-wrap gap-1 font-mono text-xs">
+        {diffs.map((d, i) => (
+          <span key={i} className={`rounded border px-1.5 py-0.5 ${TONE[d.status]}`} title={LABEL[d.status]}>
+            {d.token} {d.status !== "ok" && <em className="not-italic opacity-70">· {LABEL[d.status]}</em>}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
