@@ -1,0 +1,42 @@
+[
+  {
+    "source": "灵石",
+    "vi": "Linh Thạch",
+    "category": "currency",
+    "note": "Tiền tệ tu luyện",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active",
+    "targets": {}
+  },
+  {
+    "source": "江湖",
+    "vi": "Giang Hồ",
+    "category": "place",
+    "note": "Thế giới võ lâm",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active",
+    "targets": {}
+  },
+  {
+    "source": "内功",
+    "vi": "Nội Công",
+    "category": "skill",
+    "note": "Sức mạnh tu luyện bên trong",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active",
+    "targets": {}
+  },
+  {
+    "source": "剑法",
+    "vi": "Kiếm Pháp",
+    "category": "skill",
+    "note": "Chiêu thức dùng kiếm",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active",
+    "targets": {}
+  }
+]

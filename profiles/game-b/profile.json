@@ -1,0 +1,7 @@
+{
+  "id": "game-b",
+  "name": "Game B — Casual Hiện Đại (vi/th)",
+  "source_lang": "zh",
+  "target_langs": ["vi", "th"],
+  "char_name_convention": "Dùng tên thân thiện, hiện đại; có thể giữ tên gốc Latinh."
+}

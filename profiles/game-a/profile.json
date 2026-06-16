@@ -1,0 +1,7 @@
+{
+  "id": "game-a",
+  "name": "Game A — Kiếm Hiệp Cổ Phong",
+  "source_lang": "zh",
+  "target_langs": ["vi"],
+  "char_name_convention": "Giữ tên nhân vật dạng Hán-Việt, không phiên âm hiện đại."
+}

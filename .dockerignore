@@ -11,6 +11,9 @@
 plans/
 docs/
 web/node_modules/
+web/dist/
+# UI is rebuilt in the Docker `web` stage; don't ship the local build
+backend/static/
 
 # Transient runtime state
 backend/review_queue.jsonl

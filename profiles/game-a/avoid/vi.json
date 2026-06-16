@@ -1,0 +1,14 @@
+[
+  {
+    "term": "OK",
+    "category": "tone",
+    "severity": "warning",
+    "is_pattern": false
+  },
+  {
+    "term": "hot",
+    "category": "tone",
+    "severity": "warning",
+    "is_pattern": false
+  }
+]

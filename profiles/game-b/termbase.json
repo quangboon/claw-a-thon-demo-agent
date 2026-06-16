@@ -1,0 +1,42 @@
+[
+  {
+    "source": "金币",
+    "vi": "Vàng",
+    "category": "currency",
+    "note": "Tiền tệ cơ bản",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active",
+    "targets": { "th": "เหรียญทอง" }
+  },
+  {
+    "source": "钻石",
+    "vi": "Kim Cương",
+    "category": "currency",
+    "note": "Tiền tệ trả phí",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active",
+    "targets": { "th": "เพชร" }
+  },
+  {
+    "source": "公会",
+    "vi": "Bang Hội",
+    "category": "place",
+    "note": "Nhóm người chơi",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active",
+    "targets": { "th": "กิลด์" }
+  },
+  {
+    "source": "活动",
+    "vi": "Sự Kiện",
+    "category": "mechanic",
+    "note": "Sự kiện trong game",
+    "trust_score": 1.0,
+    "last_used": null,
+    "status": "active",
+    "targets": { "th": "อีเวนต์" }
+  }
+]

@@ -1,16 +1,26 @@
-# Single-container image: FastAPI serving API (+ static React UI when built in Phase 09).
+# Multi-stage: build the React UI, then run FastAPI serving API + static UI in one container.
 # AgentBase runtime contract: listen on 8080, expose GET /health.
-FROM python:3.11-slim
 
+# --- Stage 1: build the React UI → /backend/static ---
+FROM node:20-slim AS web
+WORKDIR /web
+COPY web/package.json ./
+RUN npm install
+COPY web/ ./
+# vite outDir is ../backend/static (relative to /web) → writes to /backend/static
+RUN npm run build
+
+# --- Stage 2: Python API + bundled UI ---
+FROM python:3.11-slim
 WORKDIR /app
 
-# Install deps first (better layer caching).
 COPY backend/requirements.txt backend/requirements.txt
 RUN pip install --no-cache-dir -r backend/requirements.txt
 
-# App code + data (termbase.json). Secrets are NOT copied (see .dockerignore);
-# LLM_* are injected via the AgentBase credential module at runtime.
+# App code + data (termbase.json). Secrets excluded via .dockerignore; LLM_* injected at runtime.
 COPY backend/ backend/
+# Built UI from stage 1 (local backend/static is .dockerignored).
+COPY --from=web /backend/static backend/static
 
 ENV PYTHONPATH=/app/backend
 EXPOSE 8080

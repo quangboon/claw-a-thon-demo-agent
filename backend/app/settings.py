@@ -22,5 +22,10 @@ class Settings(BaseSettings):
     # Sending chat_template_kwargs.enable_thinking=false yields clean `content`.
     llm_disable_thinking: bool = True
 
+    # Multi-tenant profiles (Domain Packs). Definitions live under profiles/<id>/.
+    profiles_dir: str = "profiles"
+    # Profile used when a request carries no X-Profile-Id — maps to legacy v1 paths.
+    default_profile_id: str = "default"
+
 
 settings = Settings()
