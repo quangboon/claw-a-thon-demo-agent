@@ -1,0 +1,2 @@
+{"source": "本周开放充值活动，登录领取金币奖励。", "must_contain": ["Nạp", "Sự Kiện", "Vàng"], "expect": "auto_approved"}
+{"source": "打开宝箱获得金币。", "must_contain": ["Rương Báu", "Vàng"], "expect": "auto_approved"}

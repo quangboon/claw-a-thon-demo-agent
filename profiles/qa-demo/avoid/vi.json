@@ -1,0 +1,8 @@
+[
+  { "term": "cờ bạc",        "category": "compliance", "severity": "error",   "is_pattern": false },
+  { "term": "đánh bạc",      "category": "compliance", "severity": "error",   "is_pattern": false },
+  { "term": "nổ hũ",         "category": "compliance", "severity": "error",   "is_pattern": false },
+  { "term": "cá độ",         "category": "compliance", "severity": "error",   "is_pattern": false },
+  { "term": "đỉnh của chóp", "category": "tone",       "severity": "warning", "is_pattern": false },
+  { "term": "xàm",          "category": "tone",       "severity": "warning", "is_pattern": false }
+]
