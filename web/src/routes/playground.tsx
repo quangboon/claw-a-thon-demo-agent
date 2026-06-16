@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Loader2, ArrowRight, Send } from "lucide-react";
-import { api, getActiveProfileId, type TranslateResult } from "@/lib/api";
+import { api, type TranslateResult } from "@/lib/api";
+import { useProfile } from "@/lib/profile-context";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Select } from "@/components/ui/select";
+import { ProfileSelect } from "@/components/layout/profile-select";
 import { QcVerdict } from "@/components/qc-verdict";
 
 const LANG_LABEL: Record<string, string> = { vi: "Tiếng Việt", th: "ภาษาไทย", en: "English" };
@@ -29,11 +31,13 @@ function highlight(text: string, terms: string[]) {
 const SAMPLE = "灵石 +20%，开放传送阵。完成每日任务可领取仙缘礼包，突破境界获得额外修为。";
 
 export function Playground() {
+  const { profileId } = useProfile();
   const [source, setSource] = useState(SAMPLE);
   const [lang, setLang] = useState("vi");
-  const profile = useQuery({ queryKey: ["profile", getActiveProfileId()], queryFn: () => api.getProfile(getActiveProfileId()) });
+  const profile = useQuery({ queryKey: ["profile", profileId], queryFn: () => api.getProfile(profileId) });
   const langs = profile.data?.target_langs ?? ["vi"];
-  const m = useMutation<TranslateResult, Error, void>({ mutationFn: () => api.translate(source, lang) });
+  const effLang = langs.includes(lang) ? lang : langs[0]; // keep lang valid when profile changes
+  const m = useMutation<TranslateResult, Error, void>({ mutationFn: () => api.translate(source, effLang) });
   const r = m.data;
   const zhTerms = r?.terms_required.map((t) => t.source) ?? [];
   const viTerms = r?.terms_required.map((t) => t.vi) ?? [];
@@ -50,8 +54,9 @@ export function Playground() {
             className="font-mono"
             placeholder="Dán nội dung tiếng Trung…"
           />
-          <div className="flex items-center gap-2">
-            <Select value={langs.includes(lang) ? lang : langs[0]} onChange={(e) => setLang(e.target.value)} aria-label="Ngôn ngữ đích">
+          <div className="flex flex-wrap items-center gap-2">
+            <ProfileSelect label="Hồ sơ" />
+            <Select value={effLang} onChange={(e) => setLang(e.target.value)} aria-label="Ngôn ngữ đích">
               {langs.map((l) => <option key={l} value={l}>{LANG_LABEL[l] ?? l}</option>)}
             </Select>
             <Button onClick={() => m.mutate()} disabled={m.isPending || !source.trim()}>
