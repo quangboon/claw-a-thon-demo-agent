@@ -1,0 +1,7 @@
+{
+  "id": "default",
+  "name": "Default (v1 — Tu Tiên)",
+  "source_lang": "zh",
+  "target_langs": ["vi"],
+  "char_name_convention": ""
+}

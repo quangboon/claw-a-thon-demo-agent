@@ -11,6 +11,18 @@ __pycache__/
 backend/review_queue.jsonl
 backend/corrections.jsonl
 backend/data/_test_*
+# Per-profile runtime state (generated at runtime; seed profiles ship without it)
+profiles/*/review_queue.jsonl
+profiles/*/corrections.jsonl
+
+# Frontend
+web/node_modules/
+web/dist/
+# UI build artifact (rebuilt in Docker multi-stage)
+backend/static/
 
 plans/
 .claude/
+
+# Local-only agent guide (not for GitHub)
+CLAUDE.md

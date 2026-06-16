@@ -1,0 +1,2 @@
+{"source": "灵石用于江湖交易", "must_contain": ["Linh Thạch", "Giang Hồ"], "expect": "auto_approved"}
+{"source": "修炼内功提升剑法", "must_contain": ["Nội Công", "Kiếm Pháp"], "expect": "auto_approved"}

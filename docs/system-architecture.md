@@ -151,6 +151,42 @@ Repository abstraction · 1 container (FastAPI + static React).
 - **Thêm trục QC mới:** thêm file rule + decorator.
 - **Đa ngữ (en/th) sau này:** TranslationService nhận `target_lang`; termbase đã đa cột.
 
+## 10. Multi-tenant Profile layer (v2 — Domain Packs)
+> Plan: `plans/260616-0022-multi-tenant-translation-profiles/`. Nâng agent thành **nền tảng đa team**:
+> mỗi team = 1 **Profile** (termbase + tone + need-to-avoid + examples + target langs riêng), dữ liệu cô lập,
+> dùng chung 1 deploy. **Profile = dữ liệu/config, KHÔNG phải code** → thêm team = thêm profile (OCP).
+
+**Entities mới (`domain/entities.py`):** `Profile` (id, name, source_lang, target_langs[], char_name_convention),
+`AvoidEntry` (term, category, severity, is_pattern), `Example` (source, good, bad, lang); `Term` thêm
+`targets: {lang: translation}` (đa ngôn ngữ, giữ `vi` làm cột mặc định — tương thích v1).
+
+**Port mới:** `ProfileRepository` (get/list/exists/upsert + tone/avoid/examples + set_tone/set_avoid).
+**Adapter:** `infrastructure/repositories/profile_file.py` (`FileProfileRepository`).
+
+**Namespacing (`infrastructure/profile_paths.py`):** `profile_paths(id)` → đường dẫn cô lập per team:
+```
+profiles/<id>/profile.json  termbase.json  corrections.jsonl  review_queue.jsonl
+            tone/<lang>.md   avoid/<lang>.json   examples/<lang>.json
+```
+Profile **default** map về **đường dẫn legacy v1** (`backend/termbase.json`…) → request không `X-Profile-Id`
+chạy y như v1 (backward-compatible). Thiếu file lang → fallback rỗng (không crash).
+
+**QC mới (registry, OCP):** `need-to-avoid` (banned term/pattern theo profile+lang; severity `error`=block
+→ không auto-approve, `warning`→needs_review) + `term-confidence` (còn ký tự Hán chưa dịch → cần hỗ trợ).
+Rule `check()` nhận thêm `context={avoid, target_lang}`; `term-compliance` dùng `Term.translation(lang)`
+(substring match — an toàn cho Thai/đa script).
+
+**Translator:** prompt scaffolding **tiếng Anh** (tiết kiệm token, lang-agnostic); inject tone/avoid/examples;
+footer AI theo lang (`vi`/`th`/`en`). Service build **per (profile, target_lang)**.
+
+**API:** mọi endpoint nghiệp vụ nhận `X-Profile-Id` header (fallback default) qua 1 dependency tập trung
+`get_profile_id` + resolver `lru_cache` theo profile (chống rò rỉ chéo team). Thêm `api/profiles.py`
+(CRUD profile + set tone/avoid). **UI:** `<ProfileSelect>` (topbar) + `<TargetLangSelect>` (playground) +
+route `/admin` (ProfileAdmin: tone/avoid editor). Seed demo: `profiles/{default,game-a,game-b}`.
+
+**Eval:** `run_flowcheck.py --profile <id> --target-lang <l> --golden <file>`; pytest suite trong
+`backend/tests/` cover isolation + avoid-block + profile API.
+
 ## Tham khảo (GitHub)
 - cosmicpython/book (Repository/Service patterns) · zhanymkanov/fastapi-best-practices (feature structure)
 - fastapi/full-stack-fastapi-template (1 container FE+BE) · ivan-borovets/fastapi-clean-example (DI)

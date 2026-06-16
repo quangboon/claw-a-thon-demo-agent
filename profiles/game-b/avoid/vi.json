@@ -1,0 +1,14 @@
+[
+  {
+    "term": "cờ bạc",
+    "category": "compliance",
+    "severity": "error",
+    "is_pattern": false
+  },
+  {
+    "term": "đỉnh của chóp",
+    "category": "tone",
+    "severity": "warning",
+    "is_pattern": false
+  }
+]

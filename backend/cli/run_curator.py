@@ -10,19 +10,26 @@ import argparse
 import json
 from pathlib import Path
 
-from app.composition import build_term_curator, DEFAULT_CORRECTIONS_PATH, DEFAULT_TERMBASE_PATH
+from app.composition import build_term_curator
 from app.domain.entities import Term
+from app.infrastructure.profile_paths import profile_paths
 from app.infrastructure.repositories.correction_file import FileCorrectionStore
 from app.infrastructure.repositories.termbase_file import FileTermbaseRepository
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Term Curator — propose new terms from corrections.")
-    parser.add_argument("--corrections", default=DEFAULT_CORRECTIONS_PATH)
-    parser.add_argument("--termbase", default=DEFAULT_TERMBASE_PATH)
+    parser = argparse.ArgumentParser(description="Term Curator — propose new terms from corrections (per profile).")
+    parser.add_argument("--profile", default="default", help="profile id (resolves corrections + termbase paths)")
+    parser.add_argument("--corrections", default=None, help="override corrections path")
+    parser.add_argument("--termbase", default=None, help="override termbase path")
     parser.add_argument("--approve", action="store_true", help="append reviewed proposals to termbase")
     parser.add_argument("--mock", action="store_true")
     args = parser.parse_args()
+
+    paths = profile_paths(args.profile)
+    args.corrections = args.corrections or str(paths.corrections)
+    args.termbase = args.termbase or str(paths.termbase)
+    print(f"profile={args.profile} corrections={args.corrections} termbase={args.termbase}")
 
     corrections = FileCorrectionStore(args.corrections)._all()
     repo = FileTermbaseRepository(args.termbase)

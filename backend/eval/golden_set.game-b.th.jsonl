@@ -1,0 +1,2 @@
+{"source": "金币和钻石奖励", "must_contain": ["เหรียญทอง", "เพชร"], "expect": "auto_approved"}
+{"source": "加入公会参加活动", "must_contain": ["กิลด์", "อีเวนต์"], "expect": "auto_approved"}

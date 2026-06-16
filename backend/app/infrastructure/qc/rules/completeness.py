@@ -3,6 +3,8 @@
 Note: we deliberately do NOT flag '[' or '...' — game strings legitimately contain
 bracketed variable tokens (e.g. [player_name]) and ellipses in dialogue.
 """
+from __future__ import annotations  # PEP 604 `X | None` hints on Python 3.9
+
 from app.domain.entities import QcIssue
 from app.infrastructure.qc.registry import register_qc_rule
 
@@ -15,7 +17,7 @@ class CompletenessRule:
     # VI is usually longer than compact ZH; a much-shorter draft signals dropped content.
     MIN_RATIO = 0.5
 
-    def check(self, source: str, draft: str, matched_terms: list) -> list[QcIssue]:
+    def check(self, source: str, draft: str, matched_terms: list, context: dict | None = None) -> list[QcIssue]:
         issues: list[QcIssue] = []
         text = (draft or "").strip()
         if not text:

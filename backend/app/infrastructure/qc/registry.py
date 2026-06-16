@@ -1,7 +1,9 @@
 """QC rule registry — deterministic rules self-register here.
 
 Adding a new QC check = new rule file + @register_qc_rule (no core edits → OCP).
-Each rule exposes: check(source, draft, matched_terms) -> list[QcIssue].
+Each rule exposes: check(source, draft, matched_terms, context) -> list[QcIssue],
+where `context` is a dict carrying per-(profile, lang) data: {"avoid": [AvoidEntry],
+"target_lang": str}. Rules that don't need it simply ignore the argument.
 """
 _REGISTRY: dict[str, type] = {}
 

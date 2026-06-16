@@ -1,0 +1,14 @@
+[
+  {
+    "term": "กษัตริย์",
+    "category": "monarchy",
+    "severity": "error",
+    "is_pattern": false
+  },
+  {
+    "term": "การพนัน",
+    "category": "compliance",
+    "severity": "error",
+    "is_pattern": false
+  }
+]

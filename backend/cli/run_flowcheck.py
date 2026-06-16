@@ -18,13 +18,19 @@ DEFAULT_GOLDEN = "backend/eval/golden_set.jsonl"
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Golden-set full-flow check")
+    parser = argparse.ArgumentParser(description="Golden-set full-flow check (per profile)")
     parser.add_argument("--golden", default=DEFAULT_GOLDEN)
+    parser.add_argument("--profile", default="default", help="profile id to evaluate")
+    parser.add_argument("--target-lang", default="vi", help="target language for this run")
     parser.add_argument("--mock", action="store_true")
     args = parser.parse_args()
 
     cases = [json.loads(l) for l in Path(args.golden).read_text(encoding="utf-8").splitlines() if l.strip()]
-    service = build_translation_service(llm_backend="mock" if args.mock else None)
+    service = build_translation_service(
+        profile_id=args.profile, target_lang=args.target_lang,
+        llm_backend="mock" if args.mock else None,
+    )
+    print(f"profile={args.profile} target_lang={args.target_lang} golden={args.golden}\n")
 
     passed = 0
     for c in cases:
