@@ -23,3 +23,6 @@ backend/static/
 
 plans/
 .claude/
+
+# Local-only agent guide (not for GitHub)
+CLAUDE.md
