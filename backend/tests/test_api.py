@@ -66,6 +66,19 @@ def test_avoid_edit_takes_effect_immediately(client):
     assert any(i["axis"] == "need-to-avoid" for i in after["qc"]["issues"])
 
 
+def test_get_tone_and_avoid_for_editor(client):
+    client.post("/profiles", json={"id": "ed", "name": "Ed", "target_langs": ["vi"]})
+    client.put("/profiles/ed/tone/vi", json={"text": "Tone Ed"})
+    client.put("/profiles/ed/avoid/vi",
+               json={"entries": [{"term": "x", "severity": "error", "category": "c"}]})
+    assert client.get("/profiles/ed/tone/vi").json()["text"] == "Tone Ed"
+    av = client.get("/profiles/ed/avoid/vi").json()
+    assert len(av) == 1 and av[0]["term"] == "x" and av[0]["severity"] == "error"
+    # missing lang → graceful empty
+    assert client.get("/profiles/ed/tone/en").json()["text"] == ""
+    assert client.get("/profiles/ed/avoid/en").json() == []
+
+
 def test_profile_404(client):
     assert client.get("/profiles/nope").status_code == 404
     assert client.put("/profiles/nope/tone/vi", json={"text": "x"}).status_code == 404

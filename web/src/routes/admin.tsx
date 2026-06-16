@@ -83,12 +83,14 @@ function ProfileEditor({ profileId }: { profileId: string }) {
 
 function ToneEditor({ profileId, lang }: { profileId: string; lang: string }) {
   const [text, setText] = useState("");
+  const q = useQuery({ queryKey: ["tone", profileId, lang], queryFn: () => api.getTone(profileId, lang) });
+  useEffect(() => { if (q.data) setText(q.data.text); }, [q.data]);
   const save = useMutation({ mutationFn: () => api.setTone(profileId, lang, text) });
   return (
     <div className="space-y-2">
       <p className="text-sm font-medium">Tone guide ({lang})</p>
       <Textarea value={text} onChange={(e) => setText(e.target.value)} rows={8}
-                placeholder="Nhập văn phong cho ngôn ngữ này…" />
+                placeholder={q.isLoading ? "Đang tải…" : "Nhập văn phong cho ngôn ngữ này…"} />
       <Button size="sm" onClick={() => save.mutate()} disabled={save.isPending}>
         <Save size={14} /> Lưu tone
       </Button>
@@ -97,25 +99,33 @@ function ToneEditor({ profileId, lang }: { profileId: string; lang: string }) {
   );
 }
 
+const EMPTY_ROW: AvoidEntry = { term: "", category: "", severity: "warning" };
+
 function AvoidEditor({ profileId, lang }: { profileId: string; lang: string }) {
-  const [rows, setRows] = useState<AvoidEntry[]>([{ term: "", category: "", severity: "warning" }]);
+  const [rows, setRows] = useState<AvoidEntry[]>([EMPTY_ROW]);
+  const q = useQuery({ queryKey: ["avoid", profileId, lang], queryFn: () => api.getAvoid(profileId, lang) });
+  useEffect(() => { if (q.data) setRows(q.data.length ? q.data : [EMPTY_ROW]); }, [q.data]);
   const save = useMutation({ mutationFn: () => api.setAvoid(profileId, lang, rows.filter((r) => r.term.trim())) });
   const update = (i: number, patch: Partial<AvoidEntry>) =>
     setRows(rows.map((r, idx) => (idx === i ? { ...r, ...patch } : r)));
+  const remove = (i: number) => setRows(rows.filter((_, idx) => idx !== i).length ? rows.filter((_, idx) => idx !== i) : [EMPTY_ROW]);
   return (
     <div className="space-y-2">
-      <p className="text-sm font-medium">Need-to-avoid ({lang})</p>
-      {rows.map((r, i) => (
-        <div key={i} className="flex gap-2">
-          <Input value={r.term} onChange={(e) => update(i, { term: e.target.value })} placeholder="từ cấm" />
-          <Select value={r.severity} onChange={(e) => update(i, { severity: e.target.value })}>
-            <option value="warning">warning</option>
-            <option value="error">error (block)</option>
-          </Select>
-        </div>
-      ))}
+      <p className="text-sm font-medium">Need-to-avoid ({lang}) · {rows.filter((r) => r.term.trim()).length} từ</p>
+      <div className="max-h-72 overflow-auto space-y-2 pr-1">
+        {q.isLoading ? <p className="text-muted text-sm">Đang tải…</p> : rows.map((r, i) => (
+          <div key={i} className="flex gap-2 items-center">
+            <Input value={r.term} onChange={(e) => update(i, { term: e.target.value })} placeholder="từ cấm" />
+            <Select value={r.severity} onChange={(e) => update(i, { severity: e.target.value })} className="w-28 shrink-0">
+              <option value="warning">warning</option>
+              <option value="error">error (block)</option>
+            </Select>
+            <Button size="sm" variant="ghost" onClick={() => remove(i)} title="Xóa">×</Button>
+          </div>
+        ))}
+      </div>
       <div className="flex gap-2">
-        <Button size="sm" variant="ghost" onClick={() => setRows([...rows, { term: "", category: "", severity: "warning" }])}>
+        <Button size="sm" variant="ghost" onClick={() => setRows([...rows, { ...EMPTY_ROW }])}>
           <Plus size={14} /> Thêm dòng
         </Button>
         <Button size="sm" onClick={() => save.mutate()} disabled={save.isPending}>

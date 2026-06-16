@@ -147,6 +147,10 @@ export const api = {
   getProfile: (id: string) => req<Profile>(`/profiles/${encodeURIComponent(id)}`),
   upsertProfile: (p: Partial<Profile> & { id: string }) =>
     req<{ ok: boolean }>("/profiles", { method: "POST", body: JSON.stringify(p) }),
+  getTone: (id: string, lang: string) =>
+    req<{ text: string }>(`/profiles/${encodeURIComponent(id)}/tone/${lang}`),
+  getAvoid: (id: string, lang: string) =>
+    req<AvoidEntry[]>(`/profiles/${encodeURIComponent(id)}/avoid/${lang}`),
   setTone: (id: string, lang: string, text: string) =>
     req<{ ok: boolean }>(`/profiles/${encodeURIComponent(id)}/tone/${lang}`, {
       method: "PUT", body: JSON.stringify({ text }),
