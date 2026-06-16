@@ -19,6 +19,8 @@ RUN pip install --no-cache-dir -r backend/requirements.txt
 
 # App code + data (termbase.json). Secrets excluded via .dockerignore; LLM_* injected at runtime.
 COPY backend/ backend/
+# Multi-tenant seed profiles (Domain Packs) — resolved relative to CWD /app (settings.profiles_dir="profiles").
+COPY profiles/ profiles/
 # Built UI from stage 1 (local backend/static is .dockerignored).
 COPY --from=web /backend/static backend/static
 

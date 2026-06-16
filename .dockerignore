@@ -19,3 +19,5 @@ backend/static/
 backend/review_queue.jsonl
 backend/corrections.jsonl
 backend/data/_test_*
+profiles/*/review_queue.jsonl
+profiles/*/corrections.jsonl
