@@ -1,6 +1,7 @@
 """Phase 03/04 — QC rules: term compliance (multi-lang), need-to-avoid, term confidence."""
 from app.domain.entities import AvoidEntry, Term
 from app.infrastructure.qc.rules.avoid_policy import AvoidPolicyRule
+from app.infrastructure.qc.rules.format_preservation import FormatPreservationRule
 from app.infrastructure.qc.rules.term_compliance import TermComplianceRule
 from app.infrastructure.qc.rules.term_confidence import TermConfidenceRule
 
@@ -32,6 +33,27 @@ def test_term_confidence_flags_untranslated_cjk():
 
 def test_term_confidence_skips_zh_target():
     assert TermConfidenceRule().check("源", "灵石", [], {"target_lang": "zh"}) == []
+
+
+def test_format_flags_missing_placeholder_and_tag():
+    rule = FormatPreservationRule()
+    issues = rule.check("获得 {0} 金币 <b>x</b> [player]", "Nhận Vàng [player]", [], {})
+    msgs = " ".join(i.message for i in issues if i.severity == "error")
+    assert "{0}" in msgs and "<b>" in msgs  # both missing tokens reported as error
+
+
+def test_format_ok_when_preserved():
+    rule = FormatPreservationRule()
+    assert rule.check("获得 {0} 金币 %s", "Nhận {0} Vàng %s", [], {}) == []
+
+
+def test_format_noop_on_plain_prose():
+    assert FormatPreservationRule().check("你好世界", "Xin chào thế giới", [], {}) == []
+
+
+def test_format_extra_placeholder_flagged():
+    issues = FormatPreservationRule().check("领取奖励", "Nhận {0} thưởng", [], {})
+    assert any(i.axis == "format" and i.severity == "error" for i in issues)
 
 
 def test_term_compliance_uses_target_lang():

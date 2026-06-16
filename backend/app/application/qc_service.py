@@ -2,8 +2,8 @@
 
 Status logic:
   - completeness / term-compliance issue            -> fail (fixable, retry-worthy)
-  - need-to-avoid ERROR (compliance/political/…)    -> fail (block, never auto-approve)
-  - need-to-avoid WARNING / term-confidence / weak fluency -> needs_review
+  - need-to-avoid ERROR / format ERROR              -> fail (block, never auto-approve)
+  - need-to-avoid WARNING / term-confidence / format WARNING / weak fluency -> needs_review
   - clean                                           -> pass
 
 Rules receive a `context` dict carrying the profile's per-language avoid list and the
@@ -39,7 +39,7 @@ class QCService:
                 issues.append(QcIssue("fluency", f"Độ trôi chảy thấp ({fluency}/5)", severity="warning"))
 
         blocking = any(i.axis in _HARD_FAIL_AXES for i in issues) or \
-            any(i.axis == "need-to-avoid" and i.severity == "error" for i in issues)
+            any(i.axis in {"need-to-avoid", "format"} and i.severity == "error" for i in issues)
         if blocking:
             status = "fail"
         elif issues:
