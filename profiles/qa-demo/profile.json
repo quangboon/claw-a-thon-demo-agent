@@ -1,0 +1,7 @@
+{
+  "id": "qa-demo",
+  "name": "QA Demo — Test tone & need-to-avoid",
+  "source_lang": "zh",
+  "target_langs": ["vi", "th"],
+  "char_name_convention": "Profile dùng để test: tone trang trọng, có danh sách cấm rõ ràng (error + warning)."
+}
