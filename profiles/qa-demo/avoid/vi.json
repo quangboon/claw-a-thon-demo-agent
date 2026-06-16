@@ -16,6 +16,14 @@
   { "term": "đánh bạc",        "category": "compliance",  "severity": "error",   "is_pattern": false },
   { "term": "nổ hũ",           "category": "compliance",  "severity": "error",   "is_pattern": false },
   { "term": "cá độ",           "category": "compliance",  "severity": "error",   "is_pattern": false },
+  { "term": "cá cược",         "category": "compliance",  "severity": "error",   "is_pattern": false },
+  { "term": "đặt cược",        "category": "compliance",  "severity": "error",   "is_pattern": false },
+  { "term": "may rủi",         "category": "compliance",  "severity": "error",   "is_pattern": false },
+  { "term": "đỏ đen",          "category": "compliance",  "severity": "error",   "is_pattern": false },
+  { "term": "lô đề",           "category": "compliance",  "severity": "error",   "is_pattern": false },
+  { "term": "nhà cái",         "category": "compliance",  "severity": "error",   "is_pattern": false },
+  { "term": "sòng bạc",        "category": "compliance",  "severity": "error",   "is_pattern": false },
+  { "term": "tài xỉu",         "category": "compliance",  "severity": "error",   "is_pattern": false },
 
   { "term": "đỉnh của chóp",   "category": "tone",        "severity": "warning", "is_pattern": false },
   { "term": "xàm",            "category": "tone",        "severity": "warning", "is_pattern": false }
