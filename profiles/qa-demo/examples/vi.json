@@ -4,5 +4,11 @@
     "good": "Tuần này mở Sự Kiện Nạp, đăng nhập để nhận thưởng Vàng.",
     "bad": "Tuần này có đợt nạp đỉnh của chóp, vô nhận Vàng liền nha!",
     "lang": "vi"
+  },
+  {
+    "source": "舰队航行至南沙群岛海域。",
+    "good": "Hạm đội di chuyển đến vùng biển quần đảo Trường Sa.",
+    "bad": "Hạm đội di chuyển đến vùng biển quần đảo Nam Sa.",
+    "lang": "vi"
   }
 ]
