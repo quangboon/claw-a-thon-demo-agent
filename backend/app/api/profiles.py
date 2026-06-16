@@ -13,7 +13,7 @@ from dataclasses import asdict
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
-from app.api.dependencies import get_profiles
+from app.api.dependencies import get_profiles, translation_service_for
 from app.domain.entities import AvoidEntry, Profile
 from app.infrastructure.profile_paths import is_valid_profile_id
 from app.infrastructure.repositories.profile_file import FileProfileRepository
@@ -24,6 +24,15 @@ router = APIRouter()
 def _require_valid(profile_id: str) -> None:
     if not is_valid_profile_id(profile_id):
         raise HTTPException(status_code=400, detail="invalid profile id")
+
+
+def _invalidate_services() -> None:
+    """Drop cached translation services so edited tone/avoid/target_langs take effect.
+
+    The service bakes tone/avoid/examples at construction (keyed per profile+lang), so a
+    profile edit is invisible until its cache entry is rebuilt. Clear all — they rebuild
+    lazily on the next request (cheap, file-backed)."""
+    translation_service_for.cache_clear()
 
 
 class ProfileIn(BaseModel):
@@ -74,6 +83,7 @@ def get_profile(profile_id: str, repo: FileProfileRepository = Depends(get_profi
 def upsert_profile(body: ProfileIn, repo: FileProfileRepository = Depends(get_profiles)) -> dict:
     _require_valid(body.id.strip())
     repo.upsert(Profile(**body.model_dump()))
+    _invalidate_services()
     return {"ok": True, "id": body.id}
 
 
@@ -84,6 +94,7 @@ def set_tone(profile_id: str, lang: str, body: ToneIn,
     if not repo.exists(profile_id):
         raise HTTPException(status_code=404, detail="profile not found")
     repo.set_tone(profile_id, lang, body.text)
+    _invalidate_services()
     return {"ok": True, "id": profile_id, "lang": lang}
 
 
@@ -94,4 +105,5 @@ def set_avoid(profile_id: str, lang: str, body: AvoidIn,
     if not repo.exists(profile_id):
         raise HTTPException(status_code=404, detail="profile not found")
     repo.set_avoid(profile_id, lang, [AvoidEntry(**e.model_dump()) for e in body.entries])
+    _invalidate_services()
     return {"ok": True, "id": profile_id, "lang": lang, "count": len(body.entries)}
