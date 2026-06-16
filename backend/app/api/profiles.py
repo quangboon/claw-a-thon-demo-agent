@@ -87,6 +87,18 @@ def upsert_profile(body: ProfileIn, repo: FileProfileRepository = Depends(get_pr
     return {"ok": True, "id": body.id}
 
 
+@router.get("/profiles/{profile_id}/tone/{lang}")
+def get_tone(profile_id: str, lang: str, repo: FileProfileRepository = Depends(get_profiles)) -> dict:
+    _require_valid(profile_id)
+    return {"text": repo.tone(profile_id, lang)}
+
+
+@router.get("/profiles/{profile_id}/avoid/{lang}")
+def get_avoid(profile_id: str, lang: str, repo: FileProfileRepository = Depends(get_profiles)) -> list:
+    _require_valid(profile_id)
+    return [asdict(e) for e in repo.avoid(profile_id, lang)]
+
+
 @router.put("/profiles/{profile_id}/tone/{lang}")
 def set_tone(profile_id: str, lang: str, body: ToneIn,
              repo: FileProfileRepository = Depends(get_profiles)) -> dict:
