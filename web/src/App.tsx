@@ -10,6 +10,7 @@ import { Dashboard } from "@/routes/dashboard";
 import { ProfileAdmin } from "@/routes/admin";
 import { Login } from "@/routes/login";
 import { api, getAuthToken } from "@/lib/api";
+import { ProfileProvider } from "@/lib/profile-context";
 
 export default function App() {
   const [token, setToken] = useState(getAuthToken());
@@ -21,17 +22,19 @@ export default function App() {
   if (needLogin) return <Login onSuccess={() => setToken(getAuthToken())} />;
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<AppShell />}>
-          <Route index element={<Playground />} />
-          <Route path="termbase" element={<Termbase />} />
-          <Route path="review" element={<Review />} />
-          <Route path="corrections" element={<Corrections />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="admin" element={<ProfileAdmin />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <ProfileProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<AppShell />}>
+            <Route index element={<Playground />} />
+            <Route path="termbase" element={<Termbase />} />
+            <Route path="review" element={<Review />} />
+            <Route path="corrections" element={<Corrections />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="admin" element={<ProfileAdmin />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </ProfileProvider>
   );
 }
