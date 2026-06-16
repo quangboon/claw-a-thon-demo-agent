@@ -1,17 +1,22 @@
-"""QC axis #6 — format preservation: placeholders / tags / line breaks must survive.
+r"""QC axis #6 — format preservation: placeholders / tags / line breaks must survive.
 
 Game strings carry runtime tokens that MUST pass through translation untouched, else the
-UI breaks or shows wrong data:
+UI breaks or shows wrong data. Two checks:
+
+1. Verbatim tokens — compared as a multiset (source vs draft); missing/extra → ERROR (block):
   - braces:   {0} {name} {0:F2}
   - tags:     <b> </b> <color=#fff>
   - brackets: [player_name] [HP]
   - printf:   %s %d %1$s %.2f %@
+  - CN engine control codes: \c[3] \n[1] \v[10] (RPG-Maker style)
 
-We compare the multiset of tokens in source vs draft. Missing/extra → ERROR (block);
-line-break count mismatch → WARNING. The rule is a NO-OP when the source has no such
-tokens, so plain prose / marketing copy is never falsely flagged (no per-profile config
-needed). Note: bare numbers/percent (e.g. "+20%") are intentionally NOT enforced —
-translators legitimately reformat them and exact-match would be too noisy.
+2. CN full-width MARKUP brackets — count parity per char (the CONTENT inside is translated,
+  only the brackets must survive) → WARNING:
+  - 【】《》「」『』   (item/skill/quote wrappers common in Chinese game text)
+
+NO-OP when the source has none of these, so plain prose is never falsely flagged. Bare
+numbers/percent (e.g. "+20%") and full-width （）［］ are intentionally NOT enforced —
+translators legitimately reformat/ASCII-ify them, so exact-match would be too noisy.
 """
 from __future__ import annotations
 
@@ -26,7 +31,11 @@ _PATTERNS = [
     re.compile(r"<[^<>]+>"),                                # <b>, </b>, <color=#fff>
     re.compile(r"\[[^\[\]]+\]"),                            # [player_name], [HP]
     re.compile(r"%(?:\d+\$)?[-+ #0]*\d*(?:\.\d+)?[a-zA-Z@]"),  # %s %d %1$s %.2f %@
+    re.compile(r"\\[a-zA-Z]+\[\d+\]"),                     # \c[3] \n[1] \v[10] (RPG-Maker)
 ]
+
+# Chinese full-width markup brackets: keep the bracket chars, translate the content inside.
+_CN_BRACKETS = "【】《》「」『』"
 
 
 def _tokens(text: str) -> Counter:
@@ -51,6 +60,11 @@ class FormatPreservationRule:
             issues.append(QcIssue("format", f"Thiếu/sai placeholder hoặc tag: {_fmt(missing)}", severity="error"))
         if extra:
             issues.append(QcIssue("format", f"Placeholder/tag thừa hoặc lạ: {_fmt(extra)}", severity="error"))
+        # CN full-width markup brackets — char-count parity (content inside is translated).
+        bad = [f"{ch}({source.count(ch)}→{draft.count(ch)})"
+               for ch in _CN_BRACKETS if (source or "").count(ch) != (draft or "").count(ch)]
+        if bad:
+            issues.append(QcIssue("format", f"Dấu ngoặc CN không khớp: {', '.join(bad)}", severity="warning"))
         # Line-break parity (count real '\n' + literal '\\n'); softer signal → warning.
         s_lines = (source or "").count("\n") + (source or "").count("\\n")
         d_lines = (draft or "").count("\n") + (draft or "").count("\\n")

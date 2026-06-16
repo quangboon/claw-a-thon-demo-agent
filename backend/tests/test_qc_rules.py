@@ -56,6 +56,22 @@ def test_format_extra_placeholder_flagged():
     assert any(i.axis == "format" and i.severity == "error" for i in issues)
 
 
+def test_format_cn_brackets_parity():
+    rule = FormatPreservationRule()
+    # brackets preserved (content translated) → ok
+    assert rule.check("强化【强化石】", "Cường hóa 【Cường Hóa Thạch】", [], {}) == []
+    # brackets dropped → warning
+    iss = rule.check("强化【强化石】", "Cường hóa Cường Hóa Thạch", [], {})
+    assert any(i.axis == "format" and i.severity == "warning" and "ngoặc" in i.message for i in iss)
+
+
+def test_format_rpgmaker_control_code():
+    rule = FormatPreservationRule()
+    assert rule.check("\\c[3]获得金币", "\\c[3]Nhận Vàng", [], {}) == []
+    iss = rule.check("\\c[3]获得金币", "Nhận Vàng", [], {})
+    assert any(i.axis == "format" and i.severity == "error" for i in iss)
+
+
 def test_term_compliance_uses_target_lang():
     rule = TermComplianceRule()
     term = Term(source="金币", vi="Vàng", targets={"th": "เหรียญทอง"})
