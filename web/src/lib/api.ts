@@ -67,11 +67,35 @@ export function setActiveProfileId(id: string): void {
   localStorage.setItem(PROFILE_KEY, id);
 }
 
+// --- auth (lightweight access gate) — bearer token persisted in localStorage ---
+const TOKEN_KEY = "authToken";
+let authToken = localStorage.getItem(TOKEN_KEY) || "";
+
+export function getAuthToken(): string {
+  return authToken;
+}
+export function setAuthToken(t: string): void {
+  authToken = t;
+  if (t) localStorage.setItem(TOKEN_KEY, t);
+  else localStorage.removeItem(TOKEN_KEY);
+}
+export function logout(): void {
+  setAuthToken("");
+  location.reload();
+}
+
 async function req<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(path, {
-    headers: { "Content-Type": "application/json", "X-Profile-Id": activeProfileId },
-    ...init,
-  });
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    "X-Profile-Id": activeProfileId,
+  };
+  if (authToken) headers["Authorization"] = `Bearer ${authToken}`;
+  const res = await fetch(path, { headers, ...init });
+  if (res.status === 401) {
+    setAuthToken(""); // stale/invalid token → force re-login
+    location.reload();
+    throw new Error("401 unauthorized");
+  }
   if (!res.ok) {
     const detail = await res.text().catch(() => "");
     throw new Error(`${res.status} ${res.statusText}: ${detail}`);
@@ -80,6 +104,19 @@ async function req<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 export const api = {
+  authStatus: () => req<{ auth_required: boolean }>("/auth/status"),
+  // Raw fetch (not `req`) so a 401 surfaces "wrong credentials" instead of reloading.
+  login: async (username: string, password: string): Promise<{ token: string }> => {
+    const res = await fetch("/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+    });
+    if (res.status === 401) throw new Error("Sai tài khoản hoặc mật khẩu");
+    if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+    return res.json();
+  },
+
   translate: (source: string, target_lang = "vi") =>
     req<TranslateResult>("/translate", { method: "POST", body: JSON.stringify({ source, target_lang }) }),
 

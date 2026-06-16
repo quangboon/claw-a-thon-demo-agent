@@ -4,14 +4,32 @@ Hard requirements for AgentBase runtime: listen on port 8080, expose GET /health
 """
 import os
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 
-from app.api import corrections, health, metrics, profiles, review, terms, translate
+from app.api import auth, corrections, health, metrics, profiles, review, terms, translate
+from app.api.auth import auth_enabled, token_ok
 
 app = FastAPI(title="Multi-Tenant ZH→VI/TH/EN Translate + QC Agent")
 
+# Endpoints that spend LLM tokens or expose tenant data → require a valid bearer token
+# (when auth is enabled). Public: /health, /auth/*, and the static SPA (so login can load).
+_PROTECTED_PREFIXES = ("/translate", "/terms", "/review", "/corrections", "/metrics", "/profiles")
+
+
+@app.middleware("http")
+async def auth_guard(request: Request, call_next):
+    path = request.url.path
+    if auth_enabled() and path.startswith(_PROTECTED_PREFIXES):
+        bearer = request.headers.get("authorization", "")
+        token = bearer[7:].strip() if bearer.lower().startswith("bearer ") else ""
+        if not token_ok(token):
+            return JSONResponse({"detail": "unauthorized"}, status_code=401)
+    return await call_next(request)
+
+
 # Order matters: API routers register first; static catch-all (if present) is last.
-for module in (health, translate, terms, review, corrections, metrics, profiles):
+for module in (health, auth, translate, terms, review, corrections, metrics, profiles):
     app.include_router(module.router)
 
 # Serve the built React UI (Phase 09) if present — single-container deploy.

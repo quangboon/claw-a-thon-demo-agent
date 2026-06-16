@@ -85,6 +85,10 @@ Mọi endpoint nghiệp vụ nhận header `X-Profile-Id` (mặc định `defaul
 **Profiles:** `GET /profiles`, `GET /profiles/{id}`, `POST /profiles`, `PUT /profiles/{id}/tone/{lang}`,
 `PUT /profiles/{id}/avoid/{lang}`.
 
+**Access gate (login):** bật khi `AUTH_PASSWORD` khác rỗng → màn hình đăng nhập + chặn các endpoint tốn token
+(401 nếu thiếu token). `GET /auth/status`, `POST /auth/login {username,password}` → trả bearer token. Public:
+`/health`, `/auth/*`, UI tĩnh. Cấu hình `AUTH_USERNAME`/`AUTH_PASSWORD` (xem `.env.example`); rỗng = mở (dev).
+
 **Eval/test:** `PYTHONPATH=backend python backend/cli/run_flowcheck.py --mock --profile game-b --target-lang th
 --golden backend/eval/golden_set.game-b.th.jsonl` · pytest: `cd backend && PYTHONPATH=. pytest tests/`.
 
