@@ -1,8 +1,11 @@
 <!doctype html>
-<html lang="vi">
+<html lang="vi" translate="no">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Chặn trình duyệt tự dịch (Google Translate): nó thay text-node của React →
+         crash "insertBefore NotFoundError" khi render kết quả dịch mới. -->
+    <meta name="google" content="notranslate" />
     <title>ZH→VI Translate + QC Agent</title>
   </head>
   <body>
