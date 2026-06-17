@@ -26,3 +26,7 @@ plans/
 
 # Local-only agent guide (not for GitHub)
 CLAUDE.md
+
+# Video narration audio (regenerate via gen_narration_audio.py)
+submission/video/*.wav
+.DS_Store

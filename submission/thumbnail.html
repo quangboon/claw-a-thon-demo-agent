@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Claw-a-thon 2026 — Translate + QC Agent Thumbnail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+  /* =========================================================
+     EDIT TEAM NAME HERE  →  change the text inside #team-name
+     (see the <span id="team-name"> tag in the markup below)
+     ========================================================= */
+  :root {
+    --bg-0: #05070d;
+    --bg-1: #0a0f1c;
+    --primary: #2563eb;
+    --primary-bright: #3b82f6;
+    --cyan: #38bdf8;
+    --cta: #f97316;
+    --green: #22c55e;
+    --text: #e9eef7;
+    --text-dim: #93a3bd;
+    --line: rgba(99, 130, 184, 0.18);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  /* 16:9 canvas — exactly 1280×720 for clean screenshot export */
+  .thumb {
+    position: relative;
+    width: 1280px;
+    height: 720px;
+    overflow: hidden;
+    background:
+      radial-gradient(1100px 700px at 78% -10%, rgba(37, 99, 235, 0.28), transparent 60%),
+      radial-gradient(800px 560px at 8% 115%, rgba(56, 189, 248, 0.16), transparent 60%),
+      linear-gradient(160deg, var(--bg-1) 0%, var(--bg-0) 70%);
+    color: var(--text);
+    padding: 64px 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* subtle grid texture */
+  .thumb::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(900px 600px at 70% 30%, #000 30%, transparent 80%);
+    opacity: 0.5;
+  }
+  .thumb > * { position: relative; z-index: 1; }
+
+  /* ---------- top row ---------- */
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .lang-flow {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 22px;
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    border-radius: 999px;
+    background: rgba(56, 189, 248, 0.08);
+    backdrop-filter: blur(6px);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.5px;
+  }
+  .lang-flow .src { color: var(--cyan); }
+  .lang-flow .dst { color: var(--text); }
+  .lang-flow svg { stroke: var(--primary-bright); }
+
+  .badge-track {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(249, 115, 22, 0.4);
+    background: rgba(249, 115, 22, 0.1);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.4px;
+    color: #ffd9b8;
+  }
+  .badge-track .dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--cta);
+    box-shadow: 0 0 12px var(--cta);
+  }
+
+  /* ---------- center ---------- */
+  .center { margin-top: -6px; }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--primary-bright);
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 86px;
+    line-height: 0.98;
+    letter-spacing: 1px;
+    text-shadow: 0 0 28px rgba(37, 99, 235, 0.45);
+  }
+  h1 .qc {
+    background: linear-gradient(90deg, var(--cyan), var(--primary-bright));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .subtitle {
+    margin-top: 22px;
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--text-dim);
+    max-width: 880px;
+    line-height: 1.45;
+  }
+  .subtitle b { color: var(--text); font-weight: 700; }
+
+  /* ---------- feature chips ---------- */
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 18px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.04);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .chip svg { width: 19px; height: 19px; stroke-width: 2; }
+  .chip.c1 svg { stroke: var(--cyan); }
+  .chip.c2 svg { stroke: var(--primary-bright); }
+  .chip.c3 svg { stroke: var(--cta); }
+  .chip.c4 svg { stroke: var(--green); }
+  .chip.c5 svg { stroke: #c084fc; }
+
+  /* ---------- bottom row ---------- */
+  .bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .brand .mark {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display: grid; place-items: center;
+    background: linear-gradient(140deg, var(--primary), var(--cyan));
+    box-shadow: 0 8px 30px rgba(37, 99, 235, 0.5);
+  }
+  .brand .mark svg { width: 30px; height: 30px; stroke: #fff; stroke-width: 2.2; }
+  .brand .meta .event {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 1px;
+  }
+  .brand .meta .team {
+    font-size: 16px;
+    color: var(--text-dim);
+    font-weight: 500;
+    margin-top: 3px;
+  }
+  .brand .meta .team #team-name { color: var(--cyan); font-weight: 700; }
+
+  .platform {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+  .platform .live {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--green); font-weight: 700;
+  }
+  .platform .live .pulse {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--green); box-shadow: 0 0 10px var(--green);
+  }
+</style>
+</head>
+<body>
+  <div class="thumb" role="img" aria-label="Multi-Tenant Translate and QC Agent, ZH to VI and TH, Claw-a-thon 2026">
+
+    <!-- TOP -->
+    <div class="top">
+      <div class="lang-flow">
+        <span class="src">中文 ZH</span>
+        <svg width="34" height="20" viewBox="0 0 34 20" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 10 H28" /><path d="M22 4 L30 10 L22 16" />
+        </svg>
+        <span class="dst">VI · TH</span>
+      </div>
+      <div class="badge-track"><span class="dot"></span>Track: Agentic Assistant</div>
+    </div>
+
+    <!-- CENTER -->
+    <div class="center">
+      <div class="eyebrow">Multi-Tenant Game Localization</div>
+      <h1>Translate <span class="qc">+ QC</span><br />Agent</h1>
+      <p class="subtitle">
+        Dịch game ZH→VI/TH với <b>QC độc lập 3 trục</b>, <b>tự sửa 1 vòng</b>,
+        <b>human-in-the-loop</b> &amp; <b>flywheel học từ correction</b> — mỗi team một Profile, dữ liệu cô lập.
+      </p>
+
+      <div class="chips">
+        <span class="chip c1">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-2z"/><path d="M8 7h8M8 11h6"/></svg>
+          Termbase enforced
+        </span>
+        <span class="chip c2">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg>
+          QC độc lập
+        </span>
+        <span class="chip c3">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg>
+          Tự sửa 1 vòng
+        </span>
+        <span class="chip c4">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><path d="M17 9l2 2 3-3"/></svg>
+          Human-in-the-loop
+        </span>
+        <span class="chip c5">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg>
+          Learning flywheel
+        </span>
+      </div>
+    </div>
+
+    <!-- BOTTOM -->
+    <div class="bottom">
+      <div class="brand">
+        <div class="mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h6M8 5v3c0 4-2 6-5 7"/><path d="M9 11c0 3 2 5 5 6"/><path d="M14 21l4-9 4 9M15.5 18h5"/></svg>
+        </div>
+        <div class="meta">
+          <div class="event">CLAW-A-THON 2026</div>
+          <!-- ↓↓↓  TEAM NAME  ↓↓↓ -->
+          <div class="team">Team: <span id="team-name">sdquangboon</span></div>
+          <!-- ↑↑↑  TEAM NAME  ↑↑↑ -->
+        </div>
+      </div>
+      <div class="platform">
+        <div class="live"><span class="pulse"></span>LIVE on GreenNode AgentBase</div>
+        <div>FastAPI · React · Hexagonal · OCP profiles</div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
