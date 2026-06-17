@@ -32,6 +32,24 @@ Agent dịch nội dung game tiếng Trung sang Việt/Thái bám termbase để
 
 ---
 
+## Mô tả ngắn về Agent (Tiếng Việt) — cho form (4 ý)
+
+**(1) Vấn đề:** Đội bản địa hoá game tốn nhiều công để giữ **nhất quán thuật ngữ** khi dịch nội dung tiếng Trung (vật phẩm, kỹ năng, cảnh giới tu luyện…) sang tiếng Việt/Thái — nơi Google Translate và dịch tay hay sai và thiếu kiểm soát chất lượng.
+**(2) Người dùng:** Biên dịch viên và reviewer (người duyệt) của các đội phát hành game.
+**(3) Cách agent giải quyết:** Agent quét **termbase** tìm thuật ngữ bắt buộc → **Translator** dịch và ép dùng đúng glossary → **QC độc lập** rà nhiều trục (đầy đủ, tuân thủ thuật ngữ, trôi chảy, từ cần tránh, định dạng) → chưa đạt thì **tự dịch lại 1 vòng**, vẫn chưa đạt thì **đẩy người duyệt**. Mỗi lần người sửa, cặp *sai→đúng* được lưu (**flywheel**) và đưa ngược vào lần dịch sau, nên càng dùng càng chuẩn. Đa team qua **Profile**, dữ liệu cô lập.
+**(4) Giá trị:** Dịch nhanh hơn, nhất quán thuật ngữ, có kiểm soát chất lượng và vết người duyệt; công sửa thủ công giảm dần theo thời gian. Mọi bản dịch gắn nhãn "Nội dung dịch bởi AI".
+
+---
+
+## Mô tả ngắn về Agent (Tiếng Anh) — cho form (4 ý)
+
+**(1) Problem:** Game localization teams spend heavy effort keeping **terminology consistent** when translating Chinese game content (items, skills, cultivation realms…) into Vietnamese/Thai — exactly where Google Translate and manual translation get terms wrong and lack quality control.
+**(2) Users:** Translators and reviewers (approvers) on game publishing teams.
+**(3) How the agent solves it:** It scans a **termbase** for required terms → a **Translator** translates while enforcing the glossary → an **independent QC** checks multiple axes (completeness, term compliance, fluency, need-to-avoid, format) → if it fails, the agent **self-corrects once**; if still failing, it routes to a **human reviewer**. Each human fix is saved as a *wrong→right* **correction (flywheel)** and fed back into future translations, so quality improves with use. Multi-team via isolated **Profiles**.
+**(4) Value:** Faster translation, consistent terminology, built-in quality control with a human audit trail, and steadily less manual rework over time. Every output is labeled "Translated by AI".
+
+---
+
 ## Luồng hoạt động (nếu form hỏi "how it works")
 
 ```
