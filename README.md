@@ -1,4 +1,4 @@
-# Multi-Tenant Translate + QC Agent (ZH → VI/TH/EN)
+# Multi-Tenant Translate + QC Agent (ZH → VI/TH)
 
 **Nền tảng dịch thuật game đa team**: mỗi team = 1 **Profile** (termbase + tone + need-to-avoid + examples +
 ngôn ngữ đích riêng), **dữ liệu cô lập**, dùng chung 1 deploy. Có **QC độc lập** (đầy đủ · thuật ngữ ·
@@ -7,6 +7,13 @@ học từ correction** — chạy trên GreenNode AgentBase. Profile = **dữ l
 
 > **Claw-a-thon 2026** · Track: Agentic Assistant · Live demo (API + UI):
 > https://endpoint-46484a3a-dbe3-48be-8d2f-e1388456bde8.agentbase-runtime.aiplatform.vngcloud.vn
+
+## 🎬 Video demo (bấm vào ảnh để xem)
+
+[![Xem video demo](submission/thumbnail.png)](submission/video/demo-claw-a-thon.mp4)
+
+> Demo end-to-end thao tác **thật** trên live: dịch + QC → Termbase → human-in-the-loop → **flywheel** (học từ correction) → Dashboard.
+> 🤖 **Dành cho AI agent / tích hợp tự động**: xem [`docs/agent-capabilities.md`](docs/agent-capabilities.md) — agent này làm gì, endpoint, auth, schema I/O, ví dụ gọi.
 
 ---
 
